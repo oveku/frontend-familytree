@@ -9,9 +9,11 @@ function ContextExample() {
   const [firstname, setFirstname] = useState('');
   const [lastname, setLastname] = useState('');
 
+
   // Add a new person
-  const handleAdd = () => {
-    if (!firstname || !lastname) return;
+  const handleAdd = (e) => {
+    e.preventDefault();
+    if (!firstname.trim() || !lastname.trim()) return;
     manager.create({ firstname, lastname });
     setPeople([...manager.read()]);
     setFirstname('');
@@ -27,23 +29,31 @@ function ContextExample() {
   return (
     <div className="container mt-4">
       <h2>Family Context Example</h2>
-      <div className="mb-3">
-        <input
-          className="form-control mb-2"
-          placeholder="First Name"
-          value={firstname}
-          onChange={e => setFirstname(e.target.value)}
-        />
-        <input
-          className="form-control mb-2"
-          placeholder="Last Name"
-          value={lastname}
-          onChange={e => setLastname(e.target.value)}
-        />
-        <button className="btn btn-primary" onClick={handleAdd}>
-          Add Person
-        </button>
-      </div>
+      <form className="mb-3" onSubmit={handleAdd} autoComplete="off">
+        <div className="row g-2 align-items-center">
+          <div className="col">
+            <input
+              className="form-control"
+              placeholder="First Name"
+              value={firstname}
+              onChange={e => setFirstname(e.target.value)}
+            />
+          </div>
+          <div className="col">
+            <input
+              className="form-control"
+              placeholder="Last Name"
+              value={lastname}
+              onChange={e => setLastname(e.target.value)}
+            />
+          </div>
+          <div className="col-auto">
+            <button className="btn btn-primary" type="submit">
+              Add Person
+            </button>
+          </div>
+        </div>
+      </form>
       <ul className="list-group">
         {people.map(person => (
           <li key={person.id} className="list-group-item d-flex justify-content-between align-items-center">

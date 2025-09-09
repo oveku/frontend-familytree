@@ -29,15 +29,17 @@ function MainPage() {
     <div className="App">
       <header className="App-header">
         <h1>Heritage</h1>
-        <button className="btn btn-primary mt-3 me-2" onClick={goToAddPerson}>
-          Go to Add Person Page
-        </button>
-        <button className="btn btn-secondary mt-3 me-2" onClick={goToConnectPeople}>
-          Connect People
-        </button>
-        <button className="btn btn-info mt-3" onClick={goToShowTree}>
-          Show Tree
-        </button>
+        <div className="d-flex flex-wrap justify-content-center gap-2 mt-3">
+          <button className="btn btn-primary" onClick={goToAddPerson}>
+            Add Person
+          </button>
+          <button className="btn btn-secondary" onClick={goToConnectPeople}>
+            Connect People
+          </button>
+          <button className="btn btn-info" onClick={goToShowTree}>
+            Show Tree
+          </button>
+        </div>
       </header>
       <div className="container mt-4" style={{maxWidth: 600}}>
         <h3 className="mb-3">People</h3>
@@ -76,8 +78,10 @@ function App() {
 function ShowTreePageWithBack() {
   const navigate = useNavigate();
   return (
-    <div>
-      <button className="btn btn-secondary m-3" onClick={() => navigate('/')}>Back</button>
+    <div className="container-fluid p-0">
+      <div className="d-flex justify-content-start p-3">
+        <button className="btn btn-secondary" onClick={() => navigate('/')}>Back</button>
+      </div>
       <ShowTreePage />
     </div>
   );
@@ -87,8 +91,10 @@ function ShowTreePageWithBack() {
 function ConnectPeopleWithBack() {
   const navigate = useNavigate();
   return (
-    <div>
-      <button className="btn btn-secondary m-3" onClick={() => navigate('/')}>Back</button>
+    <div className="container-fluid p-0">
+      <div className="d-flex justify-content-start p-3">
+        <button className="btn btn-secondary" onClick={() => navigate('/')}>Back</button>
+      </div>
       <ConnectPeople />
     </div>
   );

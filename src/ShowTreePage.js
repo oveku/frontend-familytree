@@ -105,7 +105,7 @@ function ShowTreePage() {
               y2={arrow.to.y - containerRect.top}
               stroke={arrow.type === 'spouse' ? 'blue' : 'green'}
               strokeWidth={2}
-              markerEnd="url(#arrowhead)"
+              markerEnd={arrow.type === 'spouse' ? undefined : 'url(#arrowhead)'}
             />
           ))}
           <defs>

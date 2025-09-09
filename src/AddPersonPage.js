@@ -1,8 +1,6 @@
-
 import React, { useState } from 'react';
 import { ContextManager, initialContext } from './ContextManager';
 import { useNavigate } from 'react-router-dom';
-
 
 function AddPersonPage() {
   const [manager] = useState(() => new ContextManager(initialContext));
@@ -12,7 +10,8 @@ function AddPersonPage() {
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
 
-  const handleAdd = () => {
+  const handleAdd = (e) => {
+    e.preventDefault();
     if (!firstname.trim() || !lastname.trim()) {
       setMessage('Please enter both first and last name.');
       return;
@@ -24,34 +23,38 @@ function AddPersonPage() {
     setMessage(`Added: ${newPerson.firstname} ${newPerson.lastname}`);
   };
 
-  const handleBack = () => {
-    navigate('/');
-  };
-
   return (
     <div className="container mt-5">
-      <h2>Add a New Person</h2>
-      <div className="mb-3">
-        <input
-          className="form-control mb-2"
-          placeholder="First Name"
-          value={firstname}
-          onChange={e => setFirstname(e.target.value)}
-        />
-        <input
-          className="form-control mb-2"
-          placeholder="Last Name"
-          value={lastname}
-          onChange={e => setLastname(e.target.value)}
-        />
-        <button className="btn btn-success me-2" onClick={handleAdd}>
-          Add
-        </button>
-        <button className="btn btn-secondary" onClick={handleBack}>
-          Back
-        </button>
-        {message && <div className="alert alert-info mt-2">{message}</div>}
+      <div className="d-flex justify-content-between align-items-center mb-4">
+        <h2 className="mb-0">Add a New Person</h2>
+        <button className="btn btn-secondary" onClick={() => navigate('/')}>Back</button>
       </div>
+      <form className="mb-3" onSubmit={handleAdd} autoComplete="off">
+        <div className="row g-2 align-items-center">
+          <div className="col">
+            <input
+              className="form-control"
+              placeholder="First Name"
+              value={firstname}
+              onChange={e => setFirstname(e.target.value)}
+            />
+          </div>
+          <div className="col">
+            <input
+              className="form-control"
+              placeholder="Last Name"
+              value={lastname}
+              onChange={e => setLastname(e.target.value)}
+            />
+          </div>
+          <div className="col-auto">
+            <button className="btn btn-success" type="submit">
+              Add
+            </button>
+          </div>
+        </div>
+        {message && <div className="alert alert-info mt-3 mb-0">{message}</div>}
+      </form>
       <h4>People List</h4>
       <ul className="list-group">
         {people.map(person => (

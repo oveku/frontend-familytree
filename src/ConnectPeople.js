@@ -1,5 +1,3 @@
-import React, { useState } from 'react';
-import { ContextManager, initialContext } from './ContextManager';
 
 function ConnectPeople() {
   const [manager] = useState(() => new ContextManager(initialContext));
@@ -9,7 +7,8 @@ function ConnectPeople() {
   const [relation, setRelation] = useState('spouse');
   const [message, setMessage] = useState('');
 
-  const handleConnect = () => {
+  const handleConnect = (e) => {
+    e.preventDefault();
     if (!person1 || !person2 || person1 === person2) {
       setMessage('Please select two different people.');
       return;
@@ -44,40 +43,48 @@ function ConnectPeople() {
 
   return (
     <div className="container mt-5">
-      <h2>Connect Two People</h2>
-      <div className="row mb-3">
-        <div className="col">
-          <label>Person 1</label>
-          <select className="form-select" value={person1} onChange={e => setPerson1(e.target.value)}>
-            <option value="">Select</option>
-            {people.map(p => (
-              <option key={p.id} value={p.id}>{p.firstname} {p.lastname}</option>
-            ))}
-          </select>
-        </div>
-        <div className="col">
-          <label>Person 2</label>
-          <select className="form-select" value={person2} onChange={e => setPerson2(e.target.value)}>
-            <option value="">Select</option>
-            {people.map(p => (
-              <option key={p.id} value={p.id}>{p.firstname} {p.lastname}</option>
-            ))}
-          </select>
-        </div>
-        <div className="col">
-          <label>Relation</label>
-          <select className="form-select" value={relation} onChange={e => setRelation(e.target.value)}>
-            <option value="spouse">Spouse</option>
-            <option value="child of">Child Of</option>
-            <option value="parent">Parent</option>
-            <option value="other">Other</option>
-          </select>
-        </div>
+      <div className="d-flex justify-content-between align-items-center mb-4">
+        <h2 className="mb-0">Connect Two People</h2>
+        <button className="btn btn-secondary" onClick={() => window.history.back()}>Back</button>
       </div>
-      <button className="btn btn-primary" onClick={handleConnect}>Connect</button>
-      {message && <div className="alert alert-info mt-2">{message}</div>}
+      <form onSubmit={handleConnect} autoComplete="off">
+        <div className="row mb-3">
+          <div className="col">
+            <label>Person 1</label>
+            <select className="form-select" value={person1} onChange={e => setPerson1(e.target.value)}>
+              <option value="">Select</option>
+              {people.map(p => (
+                <option key={p.id} value={p.id}>{p.firstname} {p.lastname}</option>
+              ))}
+            </select>
+          </div>
+          <div className="col">
+            <label>Person 2</label>
+            <select className="form-select" value={person2} onChange={e => setPerson2(e.target.value)}>
+              <option value="">Select</option>
+              {people.map(p => (
+                <option key={p.id} value={p.id}>{p.firstname} {p.lastname}</option>
+              ))}
+            </select>
+          </div>
+          <div className="col">
+            <label>Relation</label>
+            <select className="form-select" value={relation} onChange={e => setRelation(e.target.value)}>
+              <option value="spouse">Spouse</option>
+              <option value="child of">Child Of</option>
+              <option value="parent">Parent</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div className="col-auto align-self-end">
+            <button className="btn btn-primary" type="submit">Connect</button>
+          </div>
+        </div>
+        {message && <div className="alert alert-info mt-2">{message}</div>}
+      </form>
     </div>
   );
 }
 
 export default ConnectPeople;
+import React, { useState } from 'react';
