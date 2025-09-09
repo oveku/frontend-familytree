@@ -1,10 +1,13 @@
 
 import React, { useRef, useEffect, useState } from 'react';
-import { ContextManager, initialContext } from './ContextManager';
+import { ContextManager } from './ContextManager';
 
 function ShowTreePage() {
-  const manager = new ContextManager(initialContext);
-  const people = manager.read();
+  const manager = new ContextManager();
+  const [people, setPeople] = useState([]);
+  useEffect(() => {
+    manager.read().then(setPeople);
+  }, []);
   // Find all unique families (spouse pairs with children)
   const families = [];
   const used = new Set();

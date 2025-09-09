@@ -1,23 +1,29 @@
-import React, { useState } from 'react';
-import { ContextManager, initialContext } from './ContextManager';
+import React, { useState, useEffect } from 'react';
+import { ContextManager } from './ContextManager';
 import { useNavigate } from 'react-router-dom';
 
+
 function AddPersonPage() {
-  const [manager] = useState(() => new ContextManager(initialContext));
+  const manager = new ContextManager();
   const [firstname, setFirstname] = useState('');
   const [lastname, setLastname] = useState('');
-  const [people, setPeople] = useState(manager.read());
+  const [people, setPeople] = useState([]);
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
 
-  const handleAdd = (e) => {
+  // Load people on mount
+  useEffect(() => {
+    manager.read().then(setPeople);
+  }, []);
+
+  const handleAdd = async (e) => {
     e.preventDefault();
     if (!firstname.trim() || !lastname.trim()) {
       setMessage('Please enter both first and last name.');
       return;
     }
-    const newPerson = manager.create({ firstname, lastname });
-    setPeople([...manager.read()]);
+    const newPerson = await manager.create({ firstname, lastname });
+    setPeople(await manager.read());
     setFirstname('');
     setLastname('');
     setMessage(`Added: ${newPerson.firstname} ${newPerson.lastname}`);

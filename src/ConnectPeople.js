@@ -1,43 +1,52 @@
+import React, { useState, useEffect } from 'react';
+import { ContextManager } from './ContextManager';
+import { useNavigate } from 'react-router-dom';
 
 function ConnectPeople() {
-  const [manager] = useState(() => new ContextManager(initialContext));
-  const [people, setPeople] = useState(manager.read());
+  const manager = new ContextManager();
+  const [people, setPeople] = useState([]);
   const [person1, setPerson1] = useState('');
   const [person2, setPerson2] = useState('');
   const [relation, setRelation] = useState('spouse');
   const [message, setMessage] = useState('');
 
-  const handleConnect = (e) => {
+  useEffect(() => {
+    (async () => {
+      setPeople(await manager.read());
+    })();
+  }, []);
+
+  const handleConnect = async (e) => {
     e.preventDefault();
     if (!person1 || !person2 || person1 === person2) {
       setMessage('Please select two different people.');
       return;
     }
-    const p1 = manager.read(person1);
-    const p2 = manager.read(person2);
+    const p1 = (await manager.read()).find(p => p.id === person1);
+    const p2 = (await manager.read()).find(p => p.id === person2);
     if (!p1 || !p2) {
       setMessage('Invalid selection.');
       return;
     }
     // Update relations based on dropdown
     if (relation === 'spouse') {
-      manager.update(person1, { spouse: person2 });
-      manager.update(person2, { spouse: person1 });
+      await manager.update(person1, { spouse: person2 });
+      await manager.update(person2, { spouse: person1 });
     } else if (relation === 'child of') {
       // person1 is child of person2
       const children = Array.isArray(p2.children) ? [...p2.children] : [];
       if (!children.includes(person1)) children.push(person1);
-      manager.update(person2, { children });
+      await manager.update(person2, { children });
     } else if (relation === 'parent') {
       // person1 is parent of person2
       const children = Array.isArray(p1.children) ? [...p1.children] : [];
       if (!children.includes(person2)) children.push(person2);
-      manager.update(person1, { children });
+      await manager.update(person1, { children });
     } else {
       // 'other' relation, just add a note
-      manager.update(person1, { note: `Related to ${person2}` });
+      await manager.update(person1, { note: `Related to ${person2}` });
     }
-    setPeople([...manager.read()]);
+    setPeople(await manager.read());
     setMessage('Relation added!');
   };
 
@@ -87,4 +96,3 @@ function ConnectPeople() {
 }
 
 export default ConnectPeople;
-import React, { useState } from 'react';

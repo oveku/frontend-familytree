@@ -1,4 +1,4 @@
-
+import React from 'react';
 
 import './App.css';
 import ContextExample from './ContextExample';
@@ -7,7 +7,7 @@ import ConnectPeople from './ConnectPeople';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 
 
-import { ContextManager, initialContext } from './ContextManager';
+import { ContextManager } from './ContextManager';
 
 import ShowTreePage from './ShowTreePage';
 
@@ -20,8 +20,11 @@ function MainPage() {
     navigate('/connect-people');
   };
   // List persons from context
-  const manager = new ContextManager(initialContext);
-  const people = manager.read();
+  const manager = new ContextManager();
+  const [people, setPeople] = React.useState([]);
+  React.useEffect(() => {
+    manager.read().then(setPeople);
+  }, []);
   const goToShowTree = () => {
     navigate('/show-tree');
   };

@@ -1,29 +1,32 @@
-import React, { useState } from 'react';
-import { ContextManager, initialContext } from './ContextManager';
+import React, { useState, useEffect } from 'react';
+import { ContextManager } from './ContextManager';
+
 
 // Example component using ContextManager
 function ContextExample() {
-  // Initialize ContextManager with initialContext
-  const [manager] = useState(() => new ContextManager(initialContext));
-  const [people, setPeople] = useState(manager.read());
+  const manager = new ContextManager();
+  const [people, setPeople] = useState([]);
   const [firstname, setFirstname] = useState('');
   const [lastname, setLastname] = useState('');
 
+  useEffect(() => {
+    manager.read().then(setPeople);
+  }, []);
 
   // Add a new person
-  const handleAdd = (e) => {
+  const handleAdd = async (e) => {
     e.preventDefault();
     if (!firstname.trim() || !lastname.trim()) return;
-    manager.create({ firstname, lastname });
-    setPeople([...manager.read()]);
+    await manager.create({ firstname, lastname });
+    setPeople(await manager.read());
     setFirstname('');
     setLastname('');
   };
 
   // Delete a person by id
-  const handleDelete = (id) => {
-    manager.delete(id);
-    setPeople([...manager.read()]);
+  const handleDelete = async (id) => {
+    await manager.delete(id);
+    setPeople(await manager.read());
   };
 
   return (

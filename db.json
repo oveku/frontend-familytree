@@ -1,0 +1,84 @@
+{
+  "people": [
+    {
+      "id": "1",
+      "firstname": "John",
+      "lastname": "Doe",
+      "birthdate": "1980-01-01",
+      "children": [
+        "2",
+        "3"
+      ],
+      "spouse": "4",
+      "father": "5",
+      "mother": "6"
+    },
+    {
+      "id": "2",
+      "firstname": "Jane",
+      "lastname": "Doe",
+      "birthdate": "2010-05-12",
+      "children": [],
+      "spouse": null,
+      "father": "1",
+      "mother": "4"
+    },
+    {
+      "id": "3",
+      "firstname": "Jack",
+      "lastname": "Doe",
+      "birthdate": "2012-08-20",
+      "children": [],
+      "spouse": null,
+      "father": "1",
+      "mother": "4"
+    },
+    {
+      "id": "4",
+      "firstname": "Mary",
+      "lastname": "Doe",
+      "birthdate": "1982-03-15",
+      "children": [
+        "2",
+        "3"
+      ],
+      "spouse": "1",
+      "father": null,
+      "mother": null
+    },
+    {
+      "id": "5",
+      "firstname": "Robert",
+      "lastname": "Doe",
+      "birthdate": "1950-11-11",
+      "children": [
+        "1"
+      ],
+      "spouse": "6",
+      "father": null,
+      "mother": null
+    },
+    {
+      "id": "6",
+      "firstname": "Linda",
+      "lastname": "Doe",
+      "birthdate": "1952-07-07",
+      "children": [
+        "1"
+      ],
+      "spouse": "5",
+      "father": null,
+      "mother": null
+    },
+    {
+      "id": "3875",
+      "firstname": "Tom",
+      "lastname": "Trussel",
+      "birthdate": null,
+      "children": [],
+      "spouse": null,
+      "father": null,
+      "mother": null
+    }
+  ]
+}
