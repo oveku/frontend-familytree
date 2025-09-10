@@ -9,6 +9,7 @@ function ConnectPeople() {
   const [person2, setPerson2] = useState('');
   const [relation, setRelation] = useState('spouse');
   const [message, setMessage] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
