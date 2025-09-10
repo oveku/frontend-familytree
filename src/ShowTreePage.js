@@ -1,8 +1,10 @@
 
 import React, { useRef, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ContextManager } from './ContextManager';
 
 function ShowTreePage() {
+  const navigate = useNavigate();
   const manager = new ContextManager();
   const [people, setPeople] = useState([]);
   useEffect(() => {
@@ -95,7 +97,10 @@ function ShowTreePage() {
 
   return (
     <div className="container mt-5" style={{ position: 'relative' }} ref={containerRef}>
-      <h2 className="mb-4">Family Tree</h2>
+      <div className="d-flex justify-content-between align-items-center mb-4">
+        <h2 className="mb-0">Family Tree</h2>
+        <button className="btn btn-secondary" onClick={() => navigate('/')}>Back</button>
+      </div>
       {/* SVG overlay for arrows */}
       {containerRect && (
         <svg style={{ position: 'absolute', top: 0, left: 0, pointerEvents: 'none', width: '100%', height: containerRect.height, zIndex: 2 }}>

@@ -54,7 +54,7 @@ function ConnectPeople() {
     <div className="container mt-5">
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h2 className="mb-0">Connect Two People</h2>
-        <button className="btn btn-secondary" onClick={() => window.history.back()}>Back</button>
+  <button className="btn btn-secondary" onClick={() => navigate('/')}>Back</button>
       </div>
       <form onSubmit={handleConnect} autoComplete="off">
         <div className="row mb-3">
