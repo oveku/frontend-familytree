@@ -75,7 +75,9 @@
       "firstname": "Tom",
       "lastname": "Trussel",
       "birthdate": null,
-      "children": [],
+      "children": [
+        "4"
+      ],
       "spouse": null,
       "father": null,
       "mother": null
